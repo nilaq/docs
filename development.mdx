@@ -1,98 +1,67 @@
 ---
-title: 'Development'
-description: 'Learn how to preview changes locally'
+title: "Development"
+description: "Understand general concepts, response codes, and authentication strategies."
 ---
 
-<Info>
-  **Prerequisite** You should have installed Node.js (version 18.10.0 or
-  higher).
-</Info>
+<Warning>
+  The Riverslate API is still under construction and should only serve as
+  reference for now. We are working hard to make it available as soon as
+  possible.
+</Warning>
 
-Step 1. Install Mintlify on your OS:
+## Base URL
 
-<CodeGroup>
+The Riverslate API is built on REST principles. We enforce HTTPS in every request to improve
+data security, integrity, and privacy. The API does not support HTTP.
 
-```bash npm
-npm i -g mintlify
+All requests contain the following base URL:
+
+```
+  https://api.riverslate.co
 ```
 
-```bash yarn
-yarn global add mintlify
+## Authentication
+
+To authenticate you need to add an _Authorization_ header with the contents of the header being
+`Bearer rs_123456789` where `rs_123456789` is your **API Key**.
+
+```
+Authorization: Bearer rs_123456789
 ```
 
-</CodeGroup>
+## Response codes
 
-Step 2. Go to the docs are located (where you can find `mint.json`) and run the following command:
+Riverslate uses standard HTTP codes to indicate the success or failure of your requests.
 
-```bash
-mintlify dev
-```
+In general, `2xx` HTTP codes correspond to success, `4xx` codes are for user-related failures,
+and `5xx` codes are for infrastructure issues.
 
-The documentation website is now available at `http://localhost:3000`.
+| Status | Description                                 |
+| ------ | ------------------------------------------- |
+| `200`  | Successful request.                         |
+| `400`  | Check that the parameters were correct.     |
+| `401`  | The API key used was missing.               |
+| `403`  | The API key used was invalid.               |
+| `404`  | The resource was not found.                 |
+| `429`  | The rate limit was exceeded.                |
+| `5xx`  | Indicates an error with Riverslate servers. |
 
-### Custom Ports
+## Rate limit
 
-Mintlify uses port 3000 by default. You can use the `--port` flag to customize the port Mintlify runs on. For example, use this command to run in port 3333:
+The response headers describe your current rate limit following every request in conformance with
+the [IETF standard](https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-ratelimit-headers):
 
-```bash
-mintlify dev --port 3333
-```
+| `Header name`         | Description                                                         |
+| --------------------- | ------------------------------------------------------------------- |
+| `ratelimit-limit`     | Maximum number of requests allowed within a window.                 |
+| `ratelimit-remaining` | How many requests you have left within the current window.          |
+| `ratelimit-reset`     | How many seconds until the limits are reset.                        |
+| `retry-after`         | How many seconds you should wait before making a follow-up request. |
 
-You will see an error like this if you try to run Mintlify in a port that's already taken:
+The maximum number of requests that users can send is **10 requests per second**.
 
-```md
-Error: listen EADDRINUSE: address already in use :::3000
-```
+After that, you’ll hit the rate limit and receive a `429` response error code.
 
-## Mintlify Versions
-
-Each CLI is linked to a specific version of Mintlify. Please update the CLI if your local website looks different than production.
-
-<CodeGroup>
-
-```bash npm
-npm i -g mintlify@latest
-```
-
-```bash yarn
-yarn global upgrade mintlify
-```
-
-</CodeGroup>
-
-## Deployment
-
-<Tip>
-  Unlimited editors available under the [Startup
-  Plan](https://mintlify.com/pricing)
-</Tip>
-
-You should see the following if the deploy successfully went through:
-
-<Frame>
-  <img src="/images/checks-passed.png" style={{ borderRadius: '0.5rem' }} />
-</Frame>
-
-## Troubleshooting
-
-Here's how to solve some common problems when working with the CLI.
-
-<AccordionGroup>
-  <Accordion title="Mintlify is not loading">
-    Update to Node v18. Run `mintlify install` and try again.
-  </Accordion>
-  <Accordion title="No such file or directory on Windows">
-Go to the `C:/Users/Username/.mintlify/` directory and remove the `mint`
-folder. Then Open the Git Bash in this location and run `git clone
-https://github.com/mintlify/mint.git`.
-
-Repeat step 3.
-
-  </Accordion>
-  <Accordion title="Getting an unknown error">
-    Try navigating to the root of your device and delete the ~/.mintlify folder.
-    Then run `mintlify dev` again.
-  </Accordion>
-</AccordionGroup>
-
-Curious about what changed in a CLI version? [Check out the CLI changelog.](/changelog/command-line)
+To prevent this, we recommend reducing the rate at which you request the API. This can be done by
+introducing a queue mechanism or reducing the number of concurrent requests per second.
+If you have specific requirements, [contact support](mailto:support@riverslate.co) to request a rate increase.

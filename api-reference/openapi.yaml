@@ -1,5 +1,7 @@
 openapi: 3.0.0
 servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/NBITZER/RiverslateAPI/1.0.0
   - url: https://api.riverslate.co
     description: Riverslate API Server
 info:

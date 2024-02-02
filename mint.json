@@ -8,8 +8,8 @@
   "favicon": "/favicon.svg",
   "colors": {
     "primary": "#161616",
-    "light": "#161616",
-    "dark": "#FAFAFA",
+    "light": "#FAFAFA",
+    "dark": "#161616",
     "background": {
       "light": "#FAFAFA",
       "dark": "#161616"
@@ -31,55 +31,45 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "quickstart", "development"]
+      "pages": ["introduction", "development"]
     },
+
     {
-      "group": "API Documentation",
-      "pages": ["api-reference/introduction"]
-    },
-    {
-      "group": "Endpoints",
+      "group": "Users",
       "pages": [
-        {
-          "group": "Users",
-          "pages": [
-            "api-reference/endpoints/users/get-a-single-user-by-id",
-            "api-reference/endpoints/users/update-an-existing-user",
-            "api-reference/endpoints/users/delete-a-user",
-            "api-reference/endpoints/users/list-all-users",
-            "api-reference/endpoints/users/create-a-new-user"
-          ]
-        },
-        {
-          "group": "Address",
-          "pages": [
-            "api-reference/endpoints/address/get-a-users-address-by-id",
-            "api-reference/endpoints/address/create-a-new-address-for-a-user",
-            "api-reference/endpoints/address/delete-a-users-address-by-id"
-          ]
-        },
-        {
-          "group": "Plans",
-          "pages": [
-            "api-reference/endpoints/get-specific-plan",
-            "api-reference/endpoints/list-all-plans"
-          ]
-        },
-        {
-          "group": "Contracts",
-          "pages": [
-            "api-reference/endpoints/get-contract",
-            "api-reference/endpoints/cancel-active-contract",
-            "api-reference/endpoints/list-all-contracts",
-            "api-reference/endpoints/create-contract"
-          ]
-        }
+        "api-reference/endpoints/users/get-a-single-user-by-id",
+        "api-reference/endpoints/users/update-an-existing-user",
+        "api-reference/endpoints/users/delete-a-user",
+        "api-reference/endpoints/users/list-all-users",
+        "api-reference/endpoints/users/create-a-new-user"
+      ]
+    },
+    {
+      "group": "Address",
+      "pages": [
+        "api-reference/endpoints/address/get-a-users-address-by-id",
+        "api-reference/endpoints/address/create-a-new-address-for-a-user",
+        "api-reference/endpoints/address/delete-a-users-address-by-id"
+      ]
+    },
+    {
+      "group": "Plans",
+      "pages": [
+        "api-reference/endpoints/get-specific-plan",
+        "api-reference/endpoints/list-all-plans"
+      ]
+    },
+    {
+      "group": "Contracts",
+      "pages": [
+        "api-reference/endpoints/get-contract",
+        "api-reference/endpoints/cancel-active-contract",
+        "api-reference/endpoints/list-all-contracts",
+        "api-reference/endpoints/create-contract"
       ]
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "website": "https://riverslate.co"
   }
 }
