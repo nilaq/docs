@@ -1,85 +1,79 @@
 {
-  "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "openapi": ["/api-reference/openapi.yml"],
+  "name": "Riverslate",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#161616",
+    "light": "#161616",
+    "dark": "#FAFAFA",
+    "background": {
+      "light": "#FAFAFA",
+      "dark": "#161616"
+    },
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#0070F3",
+      "to": "#0000EE"
     }
+  },
+  "modeToggle": {
+    "default": "light"
   },
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
-    }
-  ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
-  },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
-  "anchors": [
-    {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "mailto:support@riverslate.co"
     }
   ],
   "navigation": [
     {
       "group": "Get Started",
-      "pages": [
-        "introduction",
-        "quickstart",
-        "development"
-      ]
-    },
-    {
-      "group": "Essentials",
-      "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
-      ]
+      "pages": ["introduction", "quickstart", "development"]
     },
     {
       "group": "API Documentation",
-      "pages": [
-        "api-reference/introduction"
-      ]
+      "pages": ["api-reference/introduction"]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Endpoints",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        {
+          "group": "Users",
+          "pages": [
+            "api-reference/endpoints/users/get-a-single-user-by-id",
+            "api-reference/endpoints/users/update-an-existing-user",
+            "api-reference/endpoints/users/delete-a-user",
+            "api-reference/endpoints/users/list-all-users",
+            "api-reference/endpoints/users/create-a-new-user"
+          ]
+        },
+        {
+          "group": "Address",
+          "pages": [
+            "api-reference/endpoints/address/get-a-users-address-by-id",
+            "api-reference/endpoints/address/create-a-new-address-for-a-user",
+            "api-reference/endpoints/address/delete-a-users-address-by-id"
+          ]
+        },
+        {
+          "group": "Plans",
+          "pages": [
+            "api-reference/endpoints/get-specific-plan",
+            "api-reference/endpoints/list-all-plans"
+          ]
+        },
+        {
+          "group": "Contracts",
+          "pages": [
+            "api-reference/endpoints/get-contract",
+            "api-reference/endpoints/cancel-active-contract",
+            "api-reference/endpoints/list-all-contracts",
+            "api-reference/endpoints/create-contract"
+          ]
+        }
       ]
     }
   ],

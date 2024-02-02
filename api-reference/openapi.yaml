@@ -1,0 +1,569 @@
+openapi: 3.0.0
+servers:
+  - url: https://api.riverslate.co
+    description: Riverslate API Server
+info:
+  version: "0.0.1"
+  title: Riverslate API
+security:
+  - bearerAuth: []
+paths:
+  /users/{id}:
+    get:
+      summary: Get a single user by ID
+      operationId: getUserById
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the user
+      responses:
+        "200":
+          description: Successfully retrieved user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: User not found
+    put:
+      summary: Update an existing user
+      operationId: updateUser
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: Successfully updated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Invalid input
+        "404":
+          description: User not found
+    delete:
+      summary: Delete a user
+      operationId: deleteUser
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the user
+      responses:
+        "204":
+          description: Successfully deleted user
+        "404":
+          description: User not found
+  /users:
+    get:
+      summary: List all users
+      operationId: listUsers
+      tags:
+        - Users
+      responses:
+        "200":
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+    post:
+      summary: Create a new user
+      operationId: createUser
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Invalid input
+  /users/{user}/address/{id}:
+    get:
+      summary: Get a user's address by ID
+      operationId: getUserAddress
+      tags:
+        - Address
+      parameters:
+        - in: path
+          name: user
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the user
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the address
+      responses:
+        "200":
+          description: Address retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Address"
+        "404":
+          description: Address not found
+    post:
+      summary: Create a new address for a user
+      operationId: createUserAddress
+      tags:
+        - Address
+      parameters:
+        - in: path
+          name: user
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the user
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the address to be created
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Address"
+      responses:
+        "201":
+          description: Address created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Address"
+        "400":
+          description: Invalid input
+    delete:
+      summary: Delete a user's address by ID
+      operationId: deleteUserAddress
+      tags:
+        - Address
+      parameters:
+        - in: path
+          name: user
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the user
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the address to be deleted
+      responses:
+        "204":
+          description: Address deleted successfully
+        "404":
+          description: Address not found
+  /plans/{id}:
+    get:
+      summary: Get Specific Plan
+      description: Retrieve detailed information about a plan with the specified ID.
+      operationId: getSpecificPlan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique identifier of the plan to retrieve.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Successfully retrieved the plan details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plan"
+        "404":
+          description: Plan with the specified ID was not found.
+  /plans:
+    get:
+      summary: List All Plans
+      description: Retrieve a list of all plans available.
+      operationId: listAllPlans
+      responses:
+        "200":
+          description: A list of plans was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plan"
+  /contracts/{id}:
+    get:
+      summary: Get Contract
+      description: Retrieve detailed information about a specific contract.
+      operationId: getContract
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique identifier of the contract.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Successfully retrieved the contract details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contract"
+        "404":
+          description: Contract not found.
+  /contracts/{id}/cancel:
+    post:
+      summary: Cancel Active Contract
+      description: Cancels an active contract.
+      operationId: cancelContract
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique identifier of the contract to cancel.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Contract cancelled successfully.
+        "404":
+          description: Contract not found or not in an active state.
+  /contracts:
+    get:
+      summary: List All Contracts
+      description: Retrieve a list of all contracts.
+      operationId: listAllContracts
+      responses:
+        "200":
+          description: A list of contracts was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Contract"
+    post:
+      summary: Create Contract
+      description: Create a new contract with the given details.
+      operationId: createContract
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Contract"
+      responses:
+        "201":
+          description: Contract created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contract"
+        "400":
+          description: Invalid input provided.
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - fullName
+        - birthdate
+        - email
+        - phone
+        - preferredLocale
+        - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: "Unique identifier of the user, generated by the database."
+          readOnly: true
+          example: "cb47d5e5-4060-4747-9859-e9e5c985ab67"
+        fullName:
+          type: string
+          description: "The full name of the user."
+          example: "John Doe"
+        birthdate:
+          type: string
+          format: date
+          description: "The birthdate of the user."
+          example: "1990-01-01"
+        email:
+          type: string
+          format: email
+          description: "The email address of the user."
+          uniqueItems: true
+          example: "user@example.com"
+        phone:
+          type: string
+          format: phone
+          description: "The users phone number"
+          example: "+49 157 87755123"
+        preferredLocale:
+          type: string
+          description: "The preferred locale of the user."
+          example: "de-de"
+        createdAt:
+          type: string
+          format: date-time
+          description: "The timestamp when the user account was created."
+          example: "2024-01-01T21:02:14Z"
+    Address:
+      type: object
+      required:
+        - id
+        - line1
+        - city
+        - country
+        - postalCode
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: "Unique identifier of the address, generated by the database."
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        line1:
+          type: string
+          description: "Address line 1 (e.g., street, PO Box, or company name)."
+          example: "123 Main St."
+        line2:
+          type: string
+          description: "Address line 2 (e.g., apartment, suite, unit, or building)."
+          example: "Apartment 4"
+        city:
+          type: string
+          description: "City, district, suburb, town, or village."
+          example: "Anytown"
+        state:
+          type: string
+          description: "State, county, province, or region."
+          example: "Anystate"
+        country:
+          type: string
+          description: "The country of the address."
+          example: "Wonderland"
+        postalCode:
+          type: string
+          description: "ZIP or postal code."
+          maxLength: 15
+          example: "12345"
+        createdAt:
+          type: string
+          format: date-time
+          description: "The timestamp when the user account was created."
+          example: "2023-01-01T00:00:00Z"
+    Meter:
+      type: object
+      required:
+        - meterId
+        - isConfirmed
+        - meterType
+        - makoType
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier for a meter, generated by the database.
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        meterId:
+          type: string
+          description: A unique meter identification string.
+          uniqueItems: true
+          example: "12345678901234567890"
+        isConfirmed:
+          type: boolean
+          description: "Flag set to false until the meter Id was confirmed by the MaKo"
+          example: false
+        meterType:
+          type: string
+          enum:
+            - SMART
+            - DIGITAL
+            - ANALOG
+          description: The type of meter.
+        makoType:
+          type: string
+          enum:
+            - MELO
+            - MALO
+          description: The market communication type for the meter.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time when the meter record was created.
+    Plan:
+      type: object
+      required:
+        - id
+        - name
+        - tariffType
+        - planCategory
+        - status
+        - baseFee
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier for the plan, generated by the database.
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        name:
+          type: string
+          description: The name of the plan.
+          example: "Residential Basic"
+        tariffType:
+          type: string
+          enum:
+            - DYNAMIC
+            - FIXED
+          description: The type of tariff applied to the plan.
+          example: "FIXED"
+        planCategory:
+          type: string
+          enum:
+            - HEATING
+            - HOUSEHOLD
+            - CHARGING
+          description: The category of the plan.
+          example: "HOUSEHOLD"
+        status:
+          type: string
+          enum:
+            - AVAILABLE
+            - ARCHIVED
+            - PENDING
+            - DRAFT
+          description: The status of the plan.
+          example: "DRAFT"
+        baseFee:
+          type: number
+          format: float
+          description: The base fee for the plan in €.
+          example: 5.99
+        pricePerKwh:
+          type: number
+          format: float
+          description: The price per kWh in €, which is nullable if it is a dynamic plan.
+          nullable: true
+          example: 0.15
+        createdAt:
+          type: string
+          format: date-time
+          description: The timestamp when the plan was created.
+          example: "2023-01-01T12:00:00Z"
+    Contract:
+      type: object
+      required:
+        - id
+        - startDate
+        - status
+        - userId
+        - planId
+        - addressId
+        - meterId
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier for the contract.
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        startDate:
+          type: string
+          format: date-time
+          description: The start date and time of the contract.
+          example: "2023-01-01T12:00:00Z"
+        status:
+          type: string
+          enum:
+            - PENDING
+            - ACTIVE
+            - CANCELLED
+          description: The current status of the contract.
+          example: ACTIVE
+        user:
+          $ref: "#/components/schemas/User"
+        plan:
+          $ref: "#/components/schemas/Plan"
+        deliveryAddress:
+          $ref: "#/components/schemas/Address"
+        meter:
+          $ref: "#/components/schemas/Meter"
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time when the contract was created.
+          example: "2023-01-01T12:00:00Z"
+        activatedAt:
+          type: string
+          format: date-time
+          description: The date and time when the contract was activated.
+          nullable: true
+        cancelledAt:
+          type: string
+          format: date-time
+          description: The date and time when the contract was cancelled.
+          nullable: true
+        endedAt:
+          type: string
+          format: date-time
+          description: The date and time when the contract ended.
+          nullable: true
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
