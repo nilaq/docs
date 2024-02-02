@@ -118,7 +118,7 @@ paths:
           description: Invalid input
   /users/{user}/address/{id}:
     get:
-      summary: Get a user's address by ID
+      summary: Get address by ID
       operationId: getUserAddress
       tags:
         - Address
@@ -147,7 +147,7 @@ paths:
         "404":
           description: Address not found
     post:
-      summary: Create a new address for a user
+      summary: Create new address
       operationId: createUserAddress
       tags:
         - Address
@@ -182,7 +182,7 @@ paths:
         "400":
           description: Invalid input
     delete:
-      summary: Delete a user's address by ID
+      summary: Delete address by ID
       operationId: deleteUserAddress
       tags:
         - Address
