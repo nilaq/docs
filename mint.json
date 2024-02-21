@@ -33,7 +33,10 @@
       "group": "Get Started",
       "pages": ["introduction", "development"]
     },
-
+    {
+      "group": "Prices",
+      "pages": ["api-reference/endpoints/get-day-ahead-prices"]
+    },
     {
       "group": "Users",
       "pages": [
